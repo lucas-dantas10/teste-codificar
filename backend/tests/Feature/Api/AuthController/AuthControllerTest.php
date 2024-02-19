@@ -50,6 +50,4 @@ it('user logout', function () {
     $response = $this->post('/api/v1/logout');
 
     $response->assertStatus(200);
-
-    // $this->assertNull($user->currentAccessToken());
 });
