@@ -16,8 +16,6 @@ it('register a user', function () {
     $response = post('/api/v1/create/user', $user);
 
     $response->assertStatus(200);
-
-    $response->assertStatus(200);
 });
 
 it('register user with invalid email', function () {
