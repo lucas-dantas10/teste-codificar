@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+
+use function Pest\Laravel\actingAs;
 
 uses()->group('auth');
 
@@ -40,7 +43,13 @@ it('invalid input for login', function () {
 });
 
 it('user logout', function () {
-    // $response = $this->get('/api/usercontroller/usercontroller');
+    $user = User::factory()->create();
 
-    // $response->assertStatus(200);
-})->todo();
+    Sanctum::actingAs($user);
+
+    $response = $this->post('/api/v1/logout');
+
+    $response->assertStatus(200);
+
+    // $this->assertNull($user->currentAccessToken());
+});

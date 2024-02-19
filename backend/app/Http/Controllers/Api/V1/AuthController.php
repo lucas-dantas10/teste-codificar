@@ -16,7 +16,6 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
             'email' => 'required|max:255',
             'password' => 'required|min:6',
         ]);
@@ -34,13 +33,15 @@ class AuthController extends Controller
             return $this->response('Email ou Senha inválidos!', 422);
         }
 
-        return $this->response('Authorized', 200, [
+        return $this->response('Autorizado', 200, [
             'token' => $request->user()->createToken('app')->plainTextToken,
         ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+        $request->user()->currentAccessToken()->delete();
 
+        return $this->response("Usuário deslogado!", 200);
     }
 }
