@@ -16,7 +16,7 @@ class UserRepository implements Repository
     }
     public function create(array $attributes)
     {
-        return User::create($attributes);
+        return User::firstOrCreate($attributes);
     }
     public function update(int $id, array $attributes)
     {
