@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\Post\PostController;
 use App\Http\Controllers\Api\V1\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -11,5 +12,6 @@ Route::prefix("v1")->group(function () {
 
     Route::middleware('auth:sanctum')->group(function() {
         Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+        Route::apiResource('/posts', PostController::class);
     });
 });
