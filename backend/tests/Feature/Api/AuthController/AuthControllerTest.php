@@ -4,6 +4,7 @@ use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\post;
 
 uses()->group('auth');
 
@@ -50,4 +51,12 @@ it('user logout', function () {
     $response = $this->post('/api/v1/logout');
 
     $response->assertStatus(200);
+});
+
+it('user not authorized to log out', function () {
+    $response = post('/api/v1/logout', [], [
+        'Accept' => 'Application/json'
+    ]);
+
+    $response->assertStatus(401);
 });
