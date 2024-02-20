@@ -9,7 +9,13 @@ class PostRepository implements Repository
 {
     public function findAll()
     {
-        return Post::all();
+        $user = auth()->user();
+
+        $posts = Post::query()
+            ->whereRaw('LENGTH(text) <= 280')
+            ->paginate();
+
+        return $posts;
     }
     public function find(int $id)
     {
@@ -17,7 +23,10 @@ class PostRepository implements Repository
     }
     public function create(array $attributes)
     {
-        return Post::create($attributes);
+        return Post::firstOrCreate(
+            ['text' => $attributes['text']],
+            $attributes
+        );
     }
     public function update(int $id, array $attributes)
     {
