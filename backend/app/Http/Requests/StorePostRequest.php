@@ -26,4 +26,13 @@ class StorePostRequest extends FormRequest
             'text' => 'required|unique:posts|max:280',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'text.required' => 'Obrigatório preencher o campo de texto',
+            'text.unique' => 'Este post já esta sendo utilizado',
+            'text.max' => 'Ultrapassado do limite de caracteres',
+        ];
+    }
 }
