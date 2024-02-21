@@ -47,8 +47,6 @@ class PostService
             'user_id' => auth()->user()->id,
         ];
 
-        dd($data);
-
         $post = $this->postRepository->create($data);
 
         if (!$post->wasRecentlyCreated) {
