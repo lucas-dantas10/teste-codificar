@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Resources\PostResource;
+use App\Models\Post;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 
+use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
@@ -35,13 +37,24 @@ it('store post', function () {
 });
 
 it('update post', function () {
-    $response = $this->get('/api/postcontroller/postcontroller');
+    $post = Post::factory()->create()->first();
+    $postUpdated = [
+        'text' => 'teste atualização de post',
+    ];
 
-    $response->assertStatus(200);
-})->todo();
+    Sanctum::actingAs($post->user);
+
+    $response = $this->put("/api/v1/posts/{$post->id}", $postUpdated);
+
+    $response->assertStatus(201);
+});
 
 it('delete post', function () {
-    $response = $this->get('/api/postcontroller/postcontroller');
+    $post = Post::factory()->create()->first();
+
+    Sanctum::actingAs($post->user);
+
+    $response = delete("/api/v1/posts/{$post->id}");
 
     $response->assertStatus(200);
-})->todo();
+});

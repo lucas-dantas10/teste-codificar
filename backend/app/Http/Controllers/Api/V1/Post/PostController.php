@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Resources\PostResource;
+use App\Models\Post;
 use App\Services\PostService;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -19,28 +21,28 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $posts = $this->postService->getAllPosts();
-
-        return $this->response('Lista de posts', 200, $posts);
+        return $this->postService->getAllPosts();
     }
 
     public function store(StorePostRequest $request)
     {
         $dataValidated = $request->validated();
 
-        $postCreated = $this->postService->storePost($dataValidated);
-
-        return $this->response('Post criado!', 201, $postCreated);
+        return $this->postService->storePost($dataValidated);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Post $post)
     {
+        $dataValidated = $request->validate([
+            'text' => 'required|max:280|unique:posts',
+        ]);
 
+        return $this->postService->updatePost($post->id, $dataValidated);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Post $post)
     {
-
+        return $this->postService->deletePost($post->id);
     }
     
 }

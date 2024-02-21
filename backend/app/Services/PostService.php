@@ -32,7 +32,7 @@ class PostService
             'next_page_url' => $posts->nextPageUrl(),
         ];
 
-        return $dataFormated;
+        return $this->response('Lista de posts', 200, $dataFormated);
     }
 
     public function getPost(int $id)
@@ -47,22 +47,41 @@ class PostService
             'user_id' => auth()->user()->id,
         ];
 
+        dd($data);
+
         $post = $this->postRepository->create($data);
 
         if (!$post->wasRecentlyCreated) {
             return $this->error('Post já existente!', 400);
         }
 
-        return new PostResource($post);
+        return $this->response('Post criado!', 201, new PostResource($post));
     }
 
     public function updatePost(int $id, array $attributes)
     {
-        return $this->postRepository->update($id, $attributes);
+        $post = $this->getPost($id);
+
+        if ($post->user->id != auth()->user()->id) {
+            return $this->error('Você não tem permissão para esta ação', 403, ['Permissão negada']);
+        }
+
+        $idPostUpdated = $this->postRepository->update($id, $attributes);
+        $postUpdated = $this->getPost($idPostUpdated);
+
+        return $this->response('Post atualizado!' ,201, new PostResource($postUpdated));
     }
 
     public function deletePost(int $id)
     {
-        return $this->postRepository->delete($id);
+        $post = $this->getPost($id);
+
+        if ($post->user->id != auth()->user()->id) {
+            return $this->error('Você não tem permissão para esta ação', 403, ['Permissão negada']);
+        }
+
+        $this->postRepository->delete($id);
+
+        return $this->response('Post deletado!', 200);
     }
 }

@@ -9,10 +9,7 @@ class PostRepository implements Repository
 {
     public function findAll()
     {
-        $user = auth()->user();
-
-        $posts = Post::query()
-            ->whereRaw('LENGTH(text) <= 280')
+        $posts = Post::whereRaw('LENGTH(text) <= 280')
             ->paginate();
 
         return $posts;
@@ -30,7 +27,12 @@ class PostRepository implements Repository
     }
     public function update(int $id, array $attributes)
     {
-        return Post::where('id', $id)->update($attributes);
+        $data = [
+            'text' => $attributes['text'],
+            'user_id' => auth()->user()->id,
+        ];
+
+        return Post::where('id', $id)->update($data);
     }
     public function delete(int $id)
     {

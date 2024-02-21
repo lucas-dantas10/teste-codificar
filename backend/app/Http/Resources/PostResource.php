@@ -18,6 +18,7 @@ class PostResource extends JsonResource
         return [
             'user' => [
                 'name' => $this->user->name,
+                'email' => $this->user->email,
             ],
             'text' => $this->text,
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'), 
