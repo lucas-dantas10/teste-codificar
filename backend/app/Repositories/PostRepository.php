@@ -9,7 +9,7 @@ class PostRepository implements Repository
 {
     public function findAll()
     {
-        $posts = Post::whereRaw('LENGTH(text) <= 280')
+        $posts = Post::whereRaw('CHAR_LENGTH(text) <= 280')
             ->paginate();
 
         return $posts;
