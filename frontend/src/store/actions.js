@@ -34,7 +34,6 @@ export function getPosts({commit}, data) {
 export function registerPost({commit}, data) {
     return axiosClient.post('/posts', data)
       .then(({data}) => {
-        console.log(data.data)
-        commit('setPosts', data);
+        return data;
       });
 }

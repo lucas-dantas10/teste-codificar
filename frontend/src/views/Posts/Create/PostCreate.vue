@@ -7,8 +7,18 @@ const form = ref({
     text: "",
 });
 
+const message = ref("");
+
 function createPost() {
-    store.dispatch('registerPost', form.value);
+    store.dispatch('registerPost', form.value)
+        .then(({data}) => {   
+            message.value = 'Post criado!';
+            setTimeout(() => message.value = '', 2000);
+        })
+        .catch(({response}) => {
+            message.value = response.data.message;
+            setTimeout(() => message.value = '', 2000);
+        });
 }
 </script>
 
@@ -16,6 +26,9 @@ function createPost() {
     <div class="w-full h-full bg-[#2b2d31]">
         <AppLayout>
             <section class="w-full h-screen md:h-screen">
+                <div class="border rounded-md p-4 mb-4" v-if="message != ''">
+                    <p class="text-white">{{ message }}</p>
+                </div>
                 <form @submit.prevent="createPost">
                     <div>
                         <label for="name" class="block text-xl font-medium leading-6 text-white">Texto</label>

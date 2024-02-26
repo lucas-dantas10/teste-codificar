@@ -17,7 +17,8 @@ function login() {
             router.push('/posts');
         })
         .catch(({response}) => {
-            error.value = response.data.message
+            error.value = response.data.message;
+            setTimeout(() => error.value = '', 4000);
         });
 }
 </script>

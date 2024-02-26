@@ -76,3 +76,9 @@ $ pnpm/npm run dev
 
 # O servidor inciará na porta:5173 - acesse <http://localhost:5173>
 ```
+
+## Login
+```json
+email: # qualquer email dos usuarios populados no banco 
+password: 'password' //todas as senhas dos usuarios fictícios é 'password'
+```

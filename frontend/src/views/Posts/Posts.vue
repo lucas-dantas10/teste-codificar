@@ -12,7 +12,6 @@ onMounted(() => {
         .then((data) => {
             posts.value = store.state.posts.data;
             totalPages.value = posts.value.total
-            return;
         });
 });
 
@@ -28,7 +27,7 @@ function goToPage(page) {
         <AppLayout>
             <section class="w-full h-full md:h-screen flex flex-col justify-center md:flex md:flex-col md:justify-between gap-6">
                 <div class="flex flex-col gap-6">
-                    <div class="w-full border flex flex-col gap-4 border-black rounded-md p-4 bg-black shadow-lg" v-for="(post, I) in posts.posts" :key="i">
+                    <div class="w-full border flex flex-col gap-4 border-black rounded-md p-4 bg-black shadow-lg" v-for="(post, i) in posts.posts" :key="i">
                         <div class="flex items-center justify-between border-b pb-4">
                             <div class="w-full flex items-end justify-between gap-4">
                                 <span class="font-bold text-xl text-white">{{ post.user.name }}</span>
