@@ -56,7 +56,7 @@ $ php artisan serve
 # endpoint <http://localhost:8000/api/v1/>
 
 ```
-## 🖥️ Rodando o Frond End (cliente)
+### 🖥️ Rodando o Frond End (cliente)
 
 ```bash
 # Clone este repositório, caso ja tenha clonado no passo do 'backend' não precisa clonar
