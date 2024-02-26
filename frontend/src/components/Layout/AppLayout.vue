@@ -5,11 +5,33 @@ import Logo from "../../assets/splash_logo.png";
 <template>
     <div>
         <div class="container flex flex-col mx-auto bg-[#141414]">
+            <div class="sm:hidden md:hidden lg:hidden">
+                <button @click="toggleSidebar" class="text-white p-3 focus:outline-none">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            x-show="isSidebarOpen"
+                            fill-rule="evenodd"
+                            d="M3 5a1 1 0 0 1 0-2h14a1 1 0 0 1 0 2H3zm0 6a1 1 0 0 1 0-2h14a1 1 0 0 1 0 2H3zm0 6a1 1 0 0 1 0-2h14a1 1 0 0 1 0 2H3z"
+                            clip-rule="evenodd"
+                        />
+                        <path
+                            x-show="!isSidebarOpen"
+                            fill-rule="evenodd"
+                            d="M4 6h12a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 5h12a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm0 5h12a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </button>
+            </div>
             <aside
-                class="group/sidebar flex flex-col shrink-0 lg:w-[300px] w-[250px] transition-all duration-300 ease-in-out m-0 fixed z-40 inset-y-0 left-0 bg-[#141414] sidenav fixed-start loopple-fixed-start"
+                class="md:group/sidebar md:flex md:flex-col md:shrink-0 lg:w-[300px] w-[250px] transition-all duration-300 ease-in-out md:m-0 md:fixed z-40 md:inset-y-0 left-0 bg-[#141414] md:sidenav md:fixed-start md:loopple-fixed-start"
                 id="sidenav-main"
             >
-
                 <div class="flex items-center justify-between px-8 py-5">
                     <div class="flex items-center mr-5">
                         <div class="mr-5">
@@ -69,8 +91,8 @@ import Logo from "../../assets/splash_logo.png";
                 </div>
             </aside>
         </div>
-        <div class="flex flex-wrap ml-9 my-5">
-            <div class="w-full mx-96">
+        <div class="flex items-center p-6 md:flex md:flex-wrap md:ml-9 md:my-5">
+            <div class="w-full h-full mx-0 md:mx-96">
                 <slot></slot>
             </div>
         </div>

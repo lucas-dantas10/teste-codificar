@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div  v-if="showSplashScreen" :class="{ loader: true, fadeout: !isLoading }">
+    <div  v-if="showSplashScreen" class="z-50" :class="{ loader: true, fadeout: !isLoading }">
         <div class="flex items-center justify-center w-full h-full">
             <img :src="Splash" alt="Splash Screen" class="splash-logo w-[500px]">
         </div>
