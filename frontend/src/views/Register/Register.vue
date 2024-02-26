@@ -7,7 +7,7 @@ import Logo from "../../assets/splash_logo.png";
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <img class="mx-auto h-10 w-auto" :src="Logo" alt="Your Company" />
             <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-                Entre com a sua conta
+                Crie a sua conta
             </h2>
         </div>
 
@@ -68,7 +68,7 @@ import Logo from "../../assets/splash_logo.png";
             </form>
 
             <div class="text-sm mt-4">
-                <a href="#" class="font-semibold text-white hover:text-[#7526a9]">Não possui conta?</a>
+                <router-link to="/" class="font-semibold text-white hover:text-[#7526a9]">Já possui conta?</router-link>
             </div>
         </div>
     </div>

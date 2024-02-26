@@ -54,7 +54,7 @@ import Logo from "../../assets/splash_logo.png";
             </form>
 
             <div class="text-sm mt-4">
-                <a href="#" class="font-semibold text-white hover:text-[#7526a9]">Não possui conta?</a>
+                <router-link to="/register" class="font-semibold text-white hover:text-[#7526a9]">Não possui conta?</router-link>
             </div>
         </div>
     </div>
