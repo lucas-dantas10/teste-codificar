@@ -1,6 +1,8 @@
 <script setup>
 import Logo from "../../assets/splash_logo.png";
 import { ref } from "vue";
+import store from '../../store/index.js';
+import router from '../../router/index.js';
 
 const form = ref({
     email: '',
@@ -8,7 +10,13 @@ const form = ref({
 });
 
 function login() {
-    console.log(form.value);
+    store.dispatch('login', form.value)
+        .then((data) => {
+            router.push('/posts');
+        })
+        .catch((data) => {
+            console.log(data);
+        });
 }
 </script>
 
