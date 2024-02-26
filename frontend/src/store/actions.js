@@ -8,8 +8,12 @@ export function login({commit}, data) {
                 commit("setToken", data.data.token);
                 return data;
             })
-            .catch(data => {
-                console.log(data)
+}
+
+export function register({commit}, data) {
+    return axiosClient.post('/create/user', data)
+            .then(({data}) => {
+                return data;
             });
 }
 

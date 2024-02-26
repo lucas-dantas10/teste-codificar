@@ -9,13 +9,15 @@ const form = ref({
     password: ''
 });
 
+const error = ref("");
+
 function login() {
     store.dispatch('login', form.value)
         .then((data) => {
             router.push('/posts');
         })
-        .catch((data) => {
-            console.log(data);
+        .catch(({response}) => {
+            error.value = response.data.message
         });
 }
 </script>
@@ -23,9 +25,16 @@ function login() {
 <template>
     <div class="bg-[#141414] h-screen w-screen flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img class="mx-auto h-10 w-auto" :src="Logo" alt="Your Company" />
+            <img class="mx-auto h-10 w-auto" :src="Logo" alt="Logo da cloud txt" />
             <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
                 Entre com a sua conta
+            </h2>
+        </div>
+
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm" v-show="error != ''">
+            <img class="mx-auto h-10 w-auto" :src="Logo" alt="Your Company" />
+            <h2 class="mt-10 text-sm border border-red-500 p-4 rounded-md bg-red-500 font-bold leading-9 tracking-tight text-white">
+                {{ error }}
             </h2>
         </div>
 

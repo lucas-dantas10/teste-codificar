@@ -1,6 +1,8 @@
 <script setup>
 import Logo from "../../assets/splash_logo.png";
 import { ref } from "vue";
+import store from '../../store/index.js';
+import router from '../../router/index.js';
 
 const form = ref({
     name: '',
@@ -8,8 +10,16 @@ const form = ref({
     password: ''
 });
 
+const error = ref("");
+
 function register() {
-    console.log(form.value);
+    store.dispatch('register', form.value)
+        .then((data) => {
+            router.push('/');
+        })
+        .catch(({response}) => {
+            error.value = response.data.message
+        });
 }
 </script>
 
@@ -19,6 +29,13 @@ function register() {
             <img class="mx-auto h-10 w-auto" :src="Logo" alt="Your Company" />
             <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
                 Crie a sua conta
+            </h2>
+        </div>
+
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm" v-show="error != ''">
+            <img class="mx-auto h-10 w-auto" :src="Logo" alt="Your Company" />
+            <h2 class="mt-10 text-sm border border-red-500 p-4 rounded-md bg-red-500 font-bold leading-9 tracking-tight text-white">
+                {{ error }}
             </h2>
         </div>
 
