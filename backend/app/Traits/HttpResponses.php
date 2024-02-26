@@ -2,13 +2,14 @@
 
 namespace App\Traits;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\MessageBag;
 
 trait HttpResponses
 {
-    public function response(string $message, string|int $status ,array|Model|JsonResource $data = [])
+    public function response(string $message, string|int $status ,array|Model|JsonResource|Authenticatable $data = [])
     {
         return \response()->json([
             'message' => $message,

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Services\UserService;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -24,5 +25,12 @@ class UserController extends Controller
         $userCreated = $this->userService->storeUser($data);
 
         return $this->response('Usuário criado!', 200, $userCreated);
+    }
+
+    public function getCurrentUser(Request $request)
+    {
+        $user = Auth::user();
+        
+        return $this->response('', 200, $user);
     }
 }

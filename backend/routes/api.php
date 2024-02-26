@@ -13,5 +13,6 @@ Route::prefix("v1")->group(function () {
     Route::middleware('auth:sanctum')->group(function() {
         Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
         Route::apiResource('/posts', PostController::class);
+        Route::get('/current-user', [UserController::class, 'getCurrentUser'])->name('user.current');
     });
 });
