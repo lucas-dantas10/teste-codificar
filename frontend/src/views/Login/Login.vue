@@ -1,5 +1,15 @@
 <script setup>
 import Logo from "../../assets/splash_logo.png";
+import { ref } from "vue";
+
+const form = ref({
+    email: '',
+    password: ''
+});
+
+function login() {
+    console.log(form.value);
+}
 </script>
 
 <template>
@@ -12,7 +22,7 @@ import Logo from "../../assets/splash_logo.png";
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" action="#" method="POST">
+            <form class="space-y-6" action="#" @submit.prevent="login">
                 <div>
                     <label for="email" class="block text-sm font-medium leading-6 text-white">Email</label>
                     <div class="mt-2">
@@ -20,6 +30,7 @@ import Logo from "../../assets/splash_logo.png";
                             id="email"
                             name="email"
                             type="email"
+                            v-model.trim="form.email"
                             autocomplete="email"
                             required
                             class="block w-full rounded-md border-0 px-2 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -36,6 +47,7 @@ import Logo from "../../assets/splash_logo.png";
                             id="password"
                             name="password"
                             type="password"
+                            v-model.trim="form.password"
                             autocomplete="current-password"
                             required
                             class="block w-full rounded-md border-0 px-3 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

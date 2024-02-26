@@ -1,5 +1,19 @@
 <script setup>
 import AppLayout from "../../components/Layout/AppLayout.vue";
+import { ref, onMounted } from "vue";
+
+onMounted(() => {
+    console.log('roda query para pegar os posts');
+});
+
+const currentPage = ref(1);
+const totalPages = ref(5);
+
+function goToPage(page) {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+}
 </script>
 
 <template>

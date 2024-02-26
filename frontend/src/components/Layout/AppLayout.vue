@@ -5,7 +5,7 @@ import Logo from "../../assets/splash_logo.png";
 <template>
     <div>
         <div class="container flex flex-col mx-auto bg-[#141414]">
-            <div class="sm:hidden md:hidden lg:hidden">
+            <!-- <div class="sm:hidden md:hidden lg:hidden">
                 <button @click="toggleSidebar" class="text-white p-3 focus:outline-none">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ import Logo from "../../assets/splash_logo.png";
                         />
                     </svg>
                 </button>
-            </div>
+            </div> -->
             <aside
                 class="md:group/sidebar md:flex md:flex-col md:shrink-0 lg:w-[300px] w-[250px] transition-all duration-300 ease-in-out md:m-0 md:fixed z-40 md:inset-y-0 left-0 bg-[#141414] md:sidenav md:fixed-start md:loopple-fixed-start"
                 id="sidenav-main"
@@ -67,11 +67,12 @@ import Logo from "../../assets/splash_logo.png";
                             <span
                                 class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]"
                             >
-                                <a
-                                    href="javascript:;"
+                                <router-link
+                                    to="/posts"
                                     class="flex items-center flex-grow text-[1.15rem] dark:text-white text-stone-500 hover:text-dark"
-                                    >Posts</a
                                 >
+                                    Posts
+                                </router-link>
                             </span>
                         </div>
 
@@ -80,11 +81,11 @@ import Logo from "../../assets/splash_logo.png";
                             <span
                                 class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]"
                             >
-                                <a
-                                    href="javascript:;"
+                                <router-link
+                                    to="/create/post"
                                     class="flex items-center flex-grow text-[1.15rem] dark:text-white text-stone-500 hover:text-dark"
-                                    >Criar post</a
-                                >
+                                    >Criar post
+                                </router-link>
                             </span>
                         </div>
                     </div>
