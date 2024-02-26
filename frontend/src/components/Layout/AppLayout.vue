@@ -1,5 +1,14 @@
 <script setup>
 import Logo from "../../assets/splash_logo.png";
+import { onMounted } from "vue";
+import store from "../../store";
+
+onMounted(() => {
+    store.dispatch('getCurrentUser')
+        .then((data) => {
+            return;
+        });
+});
 </script>
 
 <template>
@@ -47,10 +56,10 @@ import Logo from "../../assets/splash_logo.png";
                             <a
                                 href="javascript:void(0)"
                                 class="dark:hover:text-primary hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium dark:text-white text-secondary-inverse"
-                                >Seu nome</a
+                                >{{ store.state.user.data.name }}</a
                             >
                             <span class="text-secondary-dark dark:text-white font-medium block text-[0.85rem]"
-                                >Seu Email</span
+                                >{{store.state.user.data.email}}</span
                             >
                         </div>
                     </div>

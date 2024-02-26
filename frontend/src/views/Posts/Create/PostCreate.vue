@@ -1,13 +1,14 @@
 <script setup>
 import AppLayout from "../../../components/Layout/AppLayout.vue";
 import { ref } from "vue";
+import store from "../../../store";
 
 const form = ref({
     text: "",
 });
 
 function createPost() {
-    console.log(form.value);
+    store.dispatch('registerPost', form.value);
 }
 </script>
 

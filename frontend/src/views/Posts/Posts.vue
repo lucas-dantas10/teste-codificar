@@ -1,13 +1,20 @@
 <script setup>
 import AppLayout from "../../components/Layout/AppLayout.vue";
 import { ref, onMounted } from "vue";
-
-onMounted(() => {
-    console.log('roda query para pegar os posts');
-});
+import store from "../../store";
 
 const currentPage = ref(1);
-const totalPages = ref(5);
+const totalPages = ref(0);
+const posts = ref({});
+
+onMounted(() => {
+    store.dispatch('getPosts')
+        .then((data) => {
+            posts.value = store.state.posts.data;
+            totalPages.value = posts.value.total
+            return;
+        });
+});
 
 function goToPage(page) {
   if (page >= 1 && page <= totalPages.value) {
@@ -21,45 +28,20 @@ function goToPage(page) {
         <AppLayout>
             <section class="w-full h-full md:h-screen flex flex-col justify-center md:flex md:flex-col md:justify-between gap-6">
                 <div class="flex flex-col gap-6">
-                    <div class="w-full border flex flex-col gap-4 border-black rounded-md p-4 bg-black shadow-lg">
+                    <div class="w-full border flex flex-col gap-4 border-black rounded-md p-4 bg-black shadow-lg" v-for="(post, I) in posts.posts" :key="i">
                         <div class="flex items-center justify-between border-b pb-4">
                             <div class="w-full flex items-end justify-between gap-4">
-                                <span class="font-bold text-xl text-white">Lucas</span>
-                                <span class="text-gray-400">Data do Post: 26/02/2023</span>
+                                <span class="font-bold text-xl text-white">{{ post.user.name }}</span>
+                                <span class="text-gray-400">Data do Post: {{ post.created_at }}</span>
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-4">
                             <p class="text-white">
-                                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                                a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                                Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked
-                                up one of the more obscure Latin
+                                {{ post.text }}
                             </p>
 
-                            <div class="flex items-center justify-end gap-4">
-                                <button class="bg-purple-500 p-2 rounded-md text-white">Editar</button>
-                                <button class="bg-red-400 p-2 rounded-md text-white">Excluir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full border flex flex-col gap-4 border-black rounded-md p-4 bg-black shadow-lg">
-                        <div class="flex items-center justify-between border-b pb-4">
-                            <div class="w-full flex items-end justify-between gap-4">
-                                <span class="font-bold text-xl text-white">Lucas</span>
-                                <span class="text-gray-400">Data do Post: 26/02/2023</span>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col gap-4">
-                            <p class="text-white">
-                                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                                a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                                Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked
-                                up one of the more obscure Latin
-                            </p>
-
-                            <div class="flex items-center justify-end gap-4">
+                            <div class="flex items-center justify-end gap-4" v-if="post.user.email == store.state.user.email">
                                 <button class="bg-purple-500 p-2 rounded-md text-white">Editar</button>
                                 <button class="bg-red-400 p-2 rounded-md text-white">Excluir</button>
                             </div>

@@ -3,7 +3,6 @@ import axiosClient from '../axios';
 export function login({commit}, data) {
     return axiosClient.post('/login', data)
             .then(({data}) => {
-                console.log(data);
                 commit("setUser", data.data.user);
                 commit("setToken", data.data.token);
                 return data;
@@ -17,10 +16,25 @@ export function register({commit}, data) {
             });
 }
 
-// export function getCurrentUser({commit}, data) {
-//     return axiosClient.get('/user', data)
-//       .then(({data}) => {
-//         commit('setUser', data);
-//         return data;
-//       })
-// }
+export function getCurrentUser({commit}, data) {
+    return axiosClient.get('/current-user', data)
+      .then(({data}) => {
+        commit('setUser', data.data);
+        return data;
+      })
+}
+
+export function getPosts({commit}, data) {
+    return axiosClient.get('/posts')
+      .then(({data}) => {
+        commit('setPosts', data);
+      })
+}
+
+export function registerPost({commit}, data) {
+    return axiosClient.post('/posts', data)
+      .then(({data}) => {
+        console.log(data.data)
+        commit('setPosts', data);
+      });
+}

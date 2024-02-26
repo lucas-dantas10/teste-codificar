@@ -9,12 +9,18 @@ const routes = [
     {
         name: 'login',
         path: '/',
-        component: Login
+        component: Login,
+        meta: {
+            requiresGuest: true
+        },
     },
     {
         name: 'register',
         path: '/register',
-        component: Register
+        component: Register,
+        meta: {
+            requiresGuest: true
+        },
     },
     {
         name: 'posts',

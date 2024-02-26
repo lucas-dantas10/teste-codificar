@@ -11,3 +11,16 @@ export function setToken(state, token) {
         sessionStorage.removeItem("TOKEN");
     }
 }
+
+export function setPosts(state, data) {
+    state.posts= {
+        ...state.posts,
+        data: data.data,
+        links: data.meta?.links,
+        // page: data.meta.current_page,
+        // limit: data.meta.per_page,
+        // from: data.meta.from,
+        // to: data.meta.to,
+        // total: data.meta.total,
+    };
+}
