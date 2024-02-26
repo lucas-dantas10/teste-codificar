@@ -19,13 +19,13 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 - [Tailwind](https://tailwindcss.com/) 
 
-### Pré-requisitos
+## Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Composer](https://getcomposer.org/download/), [PHP](https://www.php.net/). 
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
-## 🎲 Rodando o Back End (servidor)
+### 🎲 Rodando o Back End (servidor)
 
 ```bash
 # Clone este repositório
