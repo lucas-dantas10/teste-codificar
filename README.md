@@ -34,11 +34,14 @@ $ git clone <https://github.com/lucas-dantas10/teste-codificar.git>
 # Acesse a pasta do projeto de backend no terminal/cmd
 $ cd teste-codificar/backend
 
-# Crie e edite seu arquivo .env
+# Crie e edite seu arquivo .env e configure
 $ cp .env.example .env
 
 # Instale as dependências
 $ composer install
+
+# Gere a sua chave
+$ php artisan key:generate
 
 # Realize a criação do banco e das tabelas
 $ php artisan migrate
