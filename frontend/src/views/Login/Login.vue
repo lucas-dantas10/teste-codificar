@@ -1,5 +1,6 @@
 <script setup>
 import Logo from "../../assets/splash_logo.png";
+import Spinner from "../../components/Spinner/Spinner.vue";
 import { ref } from "vue";
 import store from '../../store/index.js';
 import router from '../../router/index.js';
@@ -12,6 +13,7 @@ const form = ref({
 const error = ref("");
 
 function login() {
+    store.state.spinner.isLoading = true;
     store.dispatch('login', form.value)
         .then((data) => {
             router.push('/posts');
@@ -19,7 +21,8 @@ function login() {
         .catch(({response}) => {
             error.value = response.data.message;
             setTimeout(() => error.value = '', 4000);
-        });
+        })
+        .finally(() => store.state.spinner.isLoading = false);
 }
 </script>
 
@@ -78,6 +81,7 @@ function login() {
                         type="submit"
                         class="flex w-full justify-center rounded-md bg-[#7526a9] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#400a63] ease-in-out delay-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
+                        <Spinner />
                         Entrar
                     </button>
                 </div>

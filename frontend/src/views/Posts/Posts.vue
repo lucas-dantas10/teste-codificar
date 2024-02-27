@@ -8,17 +8,41 @@ const totalPages = ref(0);
 const posts = ref({});
 
 onMounted(() => {
-    store.dispatch('getPosts')
+    getPosts();
+});
+
+function getPosts(url = null) {
+    store.dispatch('getPosts', url)
         .then((data) => {
             posts.value = store.state.posts.data;
             totalPages.value = posts.value.total
+            currentPage.value = store.state.posts.data.current_page;
         });
-});
+}
 
-function goToPage(page) {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page;
-  }
+function nextPage() {
+    getPosts(store.state.posts.data.next_page_url);
+}
+
+function previousPage() {
+    getPosts(store.state.posts.data.previous_page_url);
+}
+
+function removePost(post) {
+    if (!confirm(`Deseja deletar o post? `)) {
+        return;
+    }
+
+    store.dispatch('removePost', post.id)
+        .then(() => {
+            store.state.toast.message = "Post removido com sucesso";
+            getPosts();
+        })
+        .finally(() => {
+            setTimeout(() => {
+                store.state.toast.message = '';
+            }, 3000);
+        });
 }
 </script>
 
@@ -31,7 +55,7 @@ function goToPage(page) {
                         <div class="flex items-center justify-between border-b pb-4">
                             <div class="w-full flex items-end justify-between gap-4">
                                 <span class="font-bold text-xl text-white">{{ post.user.name }}</span>
-                                <span class="text-gray-400">Data do Post: {{ post.created_at }}</span>
+                                <span class="text-gray-400">Criado {{ post.created_at }}</span>
                             </div>
                         </div>
 
@@ -40,33 +64,27 @@ function goToPage(page) {
                                 {{ post.text }}
                             </p>
 
-                            <div class="flex items-center justify-end gap-4" v-if="post.user.email == store.state.user.email">
+                            <div class="flex items-center justify-end gap-4" v-if="post.user.email == store.state.user.data.email">
                                 <button class="bg-purple-500 p-2 rounded-md text-white">Editar</button>
-                                <button class="bg-red-400 p-2 rounded-md text-white">Excluir</button>
+                                <button @click.prevent="removePost(post)" class="bg-red-400 p-2 rounded-md text-white">Excluir</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex justify-center">
+                <div class="flex items-center justify-center gap-4">
                     <button
-                        @click="goToPage(currentPage - 1)"
+                        @click="previousPage()"
                         :disabled="currentPage === 1"
                         class="bg-gray-600 text-white px-4 py-2 rounded-l-md"
                     >
                         Anterior
                     </button>
-                    <template v-for="page in totalPages">
-                        <button
-                            @click="goToPage(page)"
-                            :class="{ 'bg-purple-500': currentPage === page, 'bg-gray-600': currentPage !== page }"
-                            class="text-white px-4 py-2"
-                        >
-                            {{ page }}
-                        </button>
-                    </template>
+                    <div>
+                            <p class="text-white text-xl">Total de posts {{ totalPages }}</p>
+                    </div>
                     <button
-                        @click="goToPage(currentPage + 1)"
+                        @click="nextPage()"
                         :disabled="currentPage === totalPages"
                         class="bg-gray-600 text-white px-4 py-2 rounded-r-md"
                     >

@@ -12,6 +12,10 @@ export function setToken(state, token) {
     }
 }
 
+export function removeUser(state) {
+    state.user.data = [];
+}
+
 export function setPosts(state, data) {
     state.posts= {
         ...state.posts,

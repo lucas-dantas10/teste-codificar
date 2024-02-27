@@ -9,6 +9,14 @@ export function login({commit}, data) {
             })
 }
 
+export function logout({commit}, data) {
+    return axiosClient.post('/logout')
+            .then(() => {
+                commit("removeUser");
+                commit("setToken", null);
+            });
+}
+
 export function register({commit}, data) {
     return axiosClient.post('/create/user', data)
             .then(({data}) => {
@@ -24,15 +32,25 @@ export function getCurrentUser({commit}, data) {
       })
 }
 
-export function getPosts({commit}, data) {
-    return axiosClient.get('/posts')
+export function getPosts({commit}, url) {
+    const urlDefault = url || '/posts';
+
+    return axiosClient.get(urlDefault)
       .then(({data}) => {
         commit('setPosts', data);
+        return data;
       })
 }
 
 export function registerPost({commit}, data) {
     return axiosClient.post('/posts', data)
+      .then(({data}) => {
+        return data;
+      });
+}
+
+export function removePost({commit}, idPost) {
+    return axiosClient.delete(`/posts/${idPost}`)
       .then(({data}) => {
         return data;
       });

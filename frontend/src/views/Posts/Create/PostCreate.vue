@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from "../../../components/Layout/AppLayout.vue";
+import Spinner from "../../../components/Spinner/Spinner.vue";
 import { ref } from "vue";
 import store from "../../../store";
 
@@ -10,6 +11,7 @@ const form = ref({
 const message = ref("");
 
 function createPost() {
+    store.state.spinner.isLoading = true;
     store.dispatch('registerPost', form.value)
         .then(({data}) => {   
             message.value = 'Post criado!';
@@ -18,7 +20,8 @@ function createPost() {
         .catch(({response}) => {
             message.value = response.data.message;
             setTimeout(() => message.value = '', 2000);
-        });
+        })
+        .finally(() => store.state.spinner.isLoading = false);
 }
 </script>
 
@@ -46,7 +49,8 @@ function createPost() {
                     </div>
 
                     <div class="w-full flex items-end justify-end mt-4">
-                        <button class="border border-blue-500 px-2 py-1 bg-blue-500 rounded-md text-white">
+                        <button class="flex items-center border border-blue-500 px-2 py-1 bg-blue-500 rounded-md text-white">
+                            <Spinner />
                             Cadastrar
                         </button>
                     </div>

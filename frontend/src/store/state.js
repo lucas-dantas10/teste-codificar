@@ -3,7 +3,13 @@ const store = {
         token: sessionStorage.getItem('TOKEN'),
         data: []
     },
-    posts: {}
+    posts: {},
+    toast: {
+        message: ''
+    },
+    spinner: {
+        isLoading: false
+    }
 };
 
 export default store;

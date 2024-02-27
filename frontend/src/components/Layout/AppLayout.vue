@@ -1,7 +1,9 @@
 <script setup>
+import Toast from '../../components/Toast/Toast.vue'; 
 import Logo from "../../assets/splash_logo.png";
 import { onMounted } from "vue";
 import store from "../../store";
+import router from '../../router';
 
 onMounted(() => {
     store.dispatch('getCurrentUser')
@@ -9,10 +11,16 @@ onMounted(() => {
             return;
         });
 });
+
+function logout() {
+    store.dispatch('logout')
+        .then(() => router.push('/'));
+}
 </script>
 
 <template>
     <div>
+        <Toast />
         <div class="container flex flex-col mx-auto bg-[#141414]">
             <!-- <div class="sm:hidden md:hidden lg:hidden">
                 <button @click="toggleSidebar" class="text-white p-3 focus:outline-none">
@@ -71,7 +79,6 @@ onMounted(() => {
 
                 <div class="relative pl-3 my-5">
                     <div class="flex flex-col w-full font-medium">
-                        <!-- menu item -->
                         <div>
                             <span
                                 class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]"
@@ -85,7 +92,6 @@ onMounted(() => {
                             </span>
                         </div>
 
-                        <!-- menu item -->
                         <div>
                             <span
                                 class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]"
@@ -95,6 +101,18 @@ onMounted(() => {
                                     class="flex items-center flex-grow text-[1.15rem] dark:text-white text-stone-500 hover:text-dark"
                                     >Criar post
                                 </router-link>
+                            </span>
+                        </div>
+
+                        <div>
+                            <span
+                                class="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]"
+                            >
+                                <a
+                                    @click="logout()"
+                                    class="flex items-center flex-grow text-[1.15rem] dark:text-red-400 text-stone-500 hover:text-dark"
+                                    >Logout
+                                </a>
                             </span>
                         </div>
                     </div>
