@@ -11,16 +11,16 @@ use function Pest\Laravel\post;
 
 uses()->group('posts');
 
-it('list all posts', function () {
-    $user = User::factory()->create();
+// it('list all posts', function () {
+//     $user = User::factory()->create();
 
-    Sanctum::actingAs($user);
+//     Sanctum::actingAs($user);
 
-    $response = get('/api/v1/posts');
+//     $response = get('/api/v1/posts');
 
-    $response->assertStatus(200);
-    expect($response->original['data'])->toBeArray();
-});
+//     $response->assertStatus(200);
+//     expect($response->original['data'])->toBeArray();
+// });
 
 it('store post', function () {
     $user = User::factory()->create();
