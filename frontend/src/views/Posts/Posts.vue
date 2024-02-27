@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from "../../components/Layout/AppLayout.vue";
-import { ref, onMounted } from "vue";
+import Spinner from "../../components/Spinner/Spinner.vue";
+import { ref, onMounted, computed } from "vue";
 import store from "../../store";
 
 const currentPage = ref(1);
@@ -12,12 +13,14 @@ onMounted(() => {
 });
 
 function getPosts(url = null) {
+    store.state.spinner.isLoading = true;
     store.dispatch('getPosts', url)
         .then((data) => {
             posts.value = store.state.posts.data;
             totalPages.value = posts.value.total
             currentPage.value = store.state.posts.data.current_page;
-        });
+        })
+        .finally(() => store.state.spinner.isLoading = false);
 }
 
 function nextPage() {
@@ -51,7 +54,15 @@ function removePost(post) {
         <AppLayout>
             <section class="w-full h-full md:h-screen flex flex-col justify-center md:flex md:flex-col md:justify-between gap-6">
                 <div class="flex flex-col gap-6">
-                    <div class="w-full border flex flex-col gap-4 border-black rounded-md p-4 bg-black shadow-lg" v-for="(post, i) in posts.posts" :key="i">
+                    <div v-if="posts.length == 0">
+                        <p class="text-white text-2xl">Não possui posts!</p>
+                    </div>
+                    <div 
+                        class="w-full border flex flex-col gap-4 border-black rounded-md p-4 bg-black shadow-lg" 
+                        v-for="(post, i) in posts.posts" 
+                        :key="i"
+                        v-else
+                    >
                         <div class="flex items-center justify-between border-b pb-4">
                             <div class="w-full flex items-end justify-between gap-4">
                                 <span class="font-bold text-xl text-white">{{ post.user.name }}</span>
@@ -70,6 +81,8 @@ function removePost(post) {
                             </div>
                         </div>
                     </div>
+
+                    <Spinner />
                 </div>
 
                 <div class="flex items-center justify-center gap-4">
