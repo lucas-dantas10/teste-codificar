@@ -1,23 +1,37 @@
 <script setup>
 import AppLayout from "../../../components/Layout/AppLayout.vue";
 import Spinner from "../../../components/Spinner/Spinner.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import store from "../../../store";
+import router from "../../../router";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const form = ref({
     text: "",
 });
 
-function createPost() {
+onMounted(() => {
+    store.dispatch('getPost', route.params.id)
+        .then(({data}) => {
+            form.value.text = data.text;
+        });
+});
+
+const message = ref("");
+
+function updatePost() {
     store.state.spinner.isLoading = true;
-    store.dispatch('registerPost', form.value)
-        .then(({data}) => {   
-            store.state.toast.message = 'Post criado!';
-            setTimeout(() => store.state.toast.message = '', 3000);
+    form.value.id = route.params.id;
+    store.dispatch('updatePost', form.value)
+        .then(({data}) => {  
+            store.state.toast.message = 'Post atualizado!';
+            setTimeout(() => store.state.toast.message = '', 3000);  
         })
         .catch(({response}) => {
-            store.state.toast.message = 'Erro ao cadastrar o post!';
-            setTimeout(() => store.state.toast.message = '', 3000);
+            store.state.toast.message = 'Erro ao atualizar o post';
+            setTimeout(() => store.state.toast.message = '', 3000);  
         })
         .finally(() => store.state.spinner.isLoading = false);
 }
@@ -27,7 +41,10 @@ function createPost() {
     <div class="w-full h-full bg-[#2b2d31]">
         <AppLayout>
             <section class="w-full h-screen md:h-screen">
-                <form @submit.prevent="createPost">
+                <div class="border rounded-md p-4 mb-4" v-if="message != ''">
+                    <p class="text-white">{{ message }}</p>
+                </div>
+                <form @submit.prevent="updatePost">
                     <div>
                         <label for="name" class="block text-xl font-medium leading-6 text-white">Texto</label>
                         <div class="mt-2">
@@ -46,7 +63,7 @@ function createPost() {
                     <div class="w-full flex items-end justify-end mt-4">
                         <button class="flex items-center border border-blue-500 px-2 py-1 bg-blue-500 rounded-md text-white">
                             <Spinner />
-                            Cadastrar
+                            Atualizar
                         </button>
                     </div>
                 </form>

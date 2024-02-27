@@ -42,8 +42,23 @@ export function getPosts({commit}, url) {
       })
 }
 
+export function getPost({commit}, id) {
+    return axiosClient.get(`/posts/${id}`)
+      .then(({data}) => {
+        return data;
+      })
+}
+
 export function registerPost({commit}, data) {
     return axiosClient.post('/posts', data)
+      .then(({data}) => {
+        return data;
+      });
+}
+
+export function updatePost({commit}, post) {
+    console.log(post);
+    return axiosClient.put(`/posts/${post.id}`, { text: post.text })
       .then(({data}) => {
         return data;
       });

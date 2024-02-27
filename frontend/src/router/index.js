@@ -3,6 +3,7 @@ import Login from '../views/Login/Login.vue';
 import Register from '../views/Register/Register.vue';
 import Posts from '../views/Posts/Posts.vue';
 import PostCreate from '../views/Posts/Create/PostCreate.vue';
+import PostUpdate from '../views/Posts/Update/PostUpdate.vue';
 import store from '../store';
 
 const routes = [
@@ -34,6 +35,14 @@ const routes = [
         name: 'create.post',
         path: '/create/post',
         component: PostCreate,
+        meta: {
+            requiresAuth: true
+        },
+    },
+    {
+        name: 'edit.post',
+        path: '/edit/post/:id',
+        component: PostUpdate,
         meta: {
             requiresAuth: true
         },

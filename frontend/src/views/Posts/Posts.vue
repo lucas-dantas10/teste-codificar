@@ -65,7 +65,7 @@ function removePost(post) {
                             </p>
 
                             <div class="flex items-center justify-end gap-4" v-if="post.user.email == store.state.user.data.email">
-                                <button class="bg-purple-500 p-2 rounded-md text-white">Editar</button>
+                                <router-link :to="'/edit/post/' + post.id" class="bg-purple-500 p-2 rounded-md text-white">Editar</router-link>
                                 <button @click.prevent="removePost(post)" class="bg-red-400 p-2 rounded-md text-white">Excluir</button>
                             </div>
                         </div>
