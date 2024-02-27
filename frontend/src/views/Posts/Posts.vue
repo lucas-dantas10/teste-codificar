@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "../../components/Layout/AppLayout.vue";
 import Spinner from "../../components/Spinner/Spinner.vue";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import store from "../../store";
 
 const currentPage = ref(1);

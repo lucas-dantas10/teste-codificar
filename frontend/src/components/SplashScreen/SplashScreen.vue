@@ -13,7 +13,7 @@ const showSplashScreen = ref(false);
 onMounted(() => {
     const lastVisit = localStorage.getItem('lastVisit');
     const currentTime = new Date().getTime();
-    const fiveMinutesInMillis = 60 * 1000;
+    const fiveMinutesInMillis = 5 * 60 * 1000;
 
     if (!lastVisit || currentTime - parseInt(lastVisit) > fiveMinutesInMillis) {
         showSplashScreen.value = true;
@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div  v-if="showSplashScreen" class="z-50" :class="{ loader: true, fadeout: !isLoading }">
+    <div  v-if="true" class="z-50" :class="{ loader: true, fadeout: !isLoading }">
         <div class="flex items-center justify-center w-full h-full">
             <img :src="Splash" alt="Splash Screen" class="splash-logo w-[500px]">
         </div>
@@ -48,18 +48,18 @@ onMounted(() => {
   }
   
   .fadeout {
-    animation: fadeout 4s forwards;
+    animation: fadeout 3s forwards;
   }
 
   .splash-logo {
-    transition: transform 6s;
+    transition: transform 4s;
 }
   
   @keyframes fadeout {
     to {
       opacity: 0;
       visibility: hidden;
-      transform: scale(2); /* Aumenta o tamanho da logo */
+      transform: scale(2);
     }
   }
   </style>
