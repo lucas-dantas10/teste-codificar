@@ -81,7 +81,7 @@ $ pnpm/npm run dev
 ```
 
 ## Login
-```json
+```bash
 email: # qualquer email dos usuarios populados no banco 
 password: 'password' //todas as senhas dos usuarios fictícios é 'password'
 ```
