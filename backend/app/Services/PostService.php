@@ -37,7 +37,9 @@ class PostService
 
     public function getPost(int $id)
     {
-        return $this->postRepository->find($id);
+        $post = $this->postRepository->find($id);
+
+        return new PostResource($post);
     }
 
     public function storePost(array $attributes)
@@ -63,9 +65,9 @@ class PostService
         if ($post->user->id != auth()->user()->id) {
             return $this->error('Você não tem permissão para esta ação', 403, ['Permissão negada']);
         }
-
-        $idPostUpdated = $this->postRepository->update($id, $attributes);
-        $postUpdated = $this->getPost($idPostUpdated);
+        
+        $this->postRepository->update($id, $attributes);
+        $postUpdated = $this->getPost($id);
 
         return $this->response('Post atualizado!' ,201, new PostResource($postUpdated));
     }

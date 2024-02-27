@@ -31,6 +31,11 @@ class PostController extends Controller
         return $this->postService->storePost($dataValidated);
     }
 
+    public function show(Request $request, $id)
+    {
+        return $this->postService->getPost($id);
+    }
+
     public function update(Request $request, Post $post)
     {
         $dataValidated = $request->validate([
